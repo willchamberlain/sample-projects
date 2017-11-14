@@ -9,12 +9,14 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
 
     private boolean mPermissionReady;
 
@@ -74,5 +76,18 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        double xOffset = 0.0;//(cameraView.getWidth() - lastFrameCols) / 2;
+        double yOffset = 0.0;//(cameraView.getHeight() - lastFrameRows) / 2;
+        double openCVCol = (double)(event).getX() - xOffset;
+        double openCVRow = (double)(event).getY() - yOffset;
+
+        Log.i("MainActivity", "Touch image coordinates: (" + openCVCol + ", " + openCVRow + ")");
+
+        return false;// don't need subsequent touch events
+
     }
 }

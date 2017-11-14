@@ -30,8 +30,11 @@ import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.PreviewCallback;
 import android.hardware.Camera.Size;
 import android.os.Build;
+import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -57,7 +60,8 @@ import static org.bytedeco.javacpp.avutil.AV_PIX_FMT_NV21;
  *
  * @author alessandrofrancesconi, hunghd
  */
-public class CvCameraPreview extends SurfaceView implements SurfaceHolder.Callback, PreviewCallback {
+public class CvCameraPreview extends SurfaceView implements SurfaceHolder.Callback, PreviewCallback
+{
 
     private final String LOG_TAG = "CvCameraPreview";
 
@@ -131,6 +135,8 @@ public class CvCameraPreview extends SurfaceView implements SurfaceHolder.Callba
     private SurfaceTexture surfaceTexture;
     private int frameWidth, frameHeight;
     private int scaleType = SCALE_FIT;
+
+
 
     public CvCameraPreview(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -859,5 +865,21 @@ public class CvCameraPreview extends SurfaceView implements SurfaceHolder.Callba
          */
         public Mat onCameraFrame(Mat mat);
     }
+
+
+
+    private GestureDetectorCompat gestureDetector;
+    public void setGestureDetector(GestureDetectorCompat gestureDetector_){
+        gestureDetector = gestureDetector_;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Log.i("CvCameraPreview","onTouchEvent - Will");
+//        return super.onTouchEvent(event);
+        gestureDetector.onTouchEvent(event);
+        return true;
+    }
+
 
 }
