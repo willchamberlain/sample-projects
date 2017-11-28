@@ -91,7 +91,8 @@ public class CvCameraPreview extends SurfaceView implements SurfaceHolder.Callba
      * it and a lower value is required (but the aspect ratio should remain the same).<br />
      * See {@link CvCameraPreview#getBestSize(List, int)} for more information.
      */
-    private final int PREVIEW_MAX_WIDTH = 640;
+//    private final int PREVIEW_MAX_WIDTH = 640;
+    private final int PREVIEW_MAX_WIDTH = 480;
 
     /**
      * The maximum dimension (in pixels) of the images produced when a
@@ -130,7 +131,9 @@ public class CvCameraPreview extends SurfaceView implements SurfaceHolder.Callba
     private int state = STOPPED;
     private final Object syncObject = new Object();
     private int cameraId = -1;
-    private int cameraType = Camera.CameraInfo.CAMERA_FACING_BACK;
+//    private int cameraType = Camera.CameraInfo.CAMERA_FACING_BACK;
+//    private int cameraType = Camera.CameraInfo.CAMERA_FACING_FRONT;                                 // overridden in initializer(int camType, int scaleType) called from constructors
+    private int cameraType = -9000;
     private Camera cameraDevice;
     private SurfaceTexture surfaceTexture;
     private int frameWidth, frameHeight;
@@ -142,7 +145,7 @@ public class CvCameraPreview extends SurfaceView implements SurfaceHolder.Callba
         super(context, attrs);
 
         TypedArray array = getContext().obtainStyledAttributes(attrs, R.styleable.CvCameraPreview);
-        int camType = array.getInt(R.styleable.CvCameraPreview_camera_type, CAMERA_BACK);
+        int camType = array.getInt(R.styleable.CvCameraPreview_camera_type, CAMERA_BACK);           // SEE  activity_opencv.xml
         int scaleType = array.getInt(R.styleable.CvCameraPreview_scale_type, SCALE_FIT);
         array.recycle();
 
